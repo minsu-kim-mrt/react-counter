@@ -1,13 +1,33 @@
 import styled from "@emotion/styled";
 
 interface Props {
-  value: number;
-  onChange: (count: number) => void;
+  value: string;
+  onChange: (count: string) => void;
 }
 
 const InputView = ({ value, onChange }: Props) => {
+  const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const newValue = e.target.value;
+    
+    // 빈 값 허용
+    if (newValue === '') {
+      onChange('');
+      return;
+    }
+    
+    // 첫 문자가 0이면 입력 차단
+    if (newValue.startsWith('0')) {
+      return;
+    }
+    
+    // 숫자만 허용
+    if (/^\d+$/.test(newValue)) {
+      onChange(newValue);
+    }
+  };
+
   return (
-    <Input type="number" value={value} onChange={(e) => onChange(parseInt(e.target.value) || 0)}/>
+    <Input type="text" value={value} onChange={handleChange} />
   );
 };
 

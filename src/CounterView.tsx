@@ -4,32 +4,38 @@ import InputView from './InputView';
 import CounterButton from './CounterButton';
 
 const CounterView = () => {
-  const [inputNumber, setInputNumber] = useState(0);
+  const [inputNumber, setInputNumber] = useState('');
   const [history, setHistory] = useState<number[]>([0]);
   const [currentIndex, setCurrentIndex] = useState(0);
 
   const count = history[currentIndex];
 
   const handlePlus = () => {
-    const newCount = count + inputNumber;
+    const numValue = parseInt(inputNumber) || 0;
+    const newCount = count + numValue;
+    
+    setInputNumber('');
+    
     if (newCount === count) return;
     
     const newHistory = history.slice(0, currentIndex + 1);
     newHistory.push(newCount);
     setHistory(newHistory);
     setCurrentIndex(currentIndex + 1);
-    setInputNumber(0);
   };
 
   const handleMinus = () => {
-    const newCount = count - inputNumber;
+    const numValue = parseInt(inputNumber) || 0;
+    const newCount = count - numValue;
+    
+    setInputNumber('');
+    
     if (newCount === count) return;
     
     const newHistory = history.slice(0, currentIndex + 1);
     newHistory.push(newCount);
     setHistory(newHistory);
     setCurrentIndex(currentIndex + 1);
-    setInputNumber(0);
   };
 
   const handleUndo = () => {
